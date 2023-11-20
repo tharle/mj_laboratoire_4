@@ -26,15 +26,12 @@ public class PlayerController : MonoBehaviour
     {
         Debug.DrawRay(m_Foot.position, Vector3.down * DISTANCE_CHECK_COLLISION_FEET, Color.red);
         Move();
-        Jump();
+        if(IsGround() && Input.GetKeyDown(GameParametres.InputName.KEY_JUMP)) Jump();
     }
 
     private void Jump()
     {
-        if (IsGround() && Input.GetKeyDown(GameParametres.InputName.KEY_JUMP))
-        {
-            m_RigidBody.AddForce(Vector3.up * m_JumpForce, ForceMode.Impulse);
-        }
+        m_RigidBody.AddForce(Vector3.up * m_JumpForce, ForceMode.Impulse);
     }
 
     private void Move()
@@ -58,7 +55,8 @@ public class PlayerController : MonoBehaviour
     public void TouchEnemy(EnemyController enemy) {
         if (IsSmashingEnemy(enemy))
         {
-            Destroy(enemy);
+            Destroy(enemy.gameObject);
+            Jump();
         } else
         {
             m_HUDManager.ShowGameOver();
