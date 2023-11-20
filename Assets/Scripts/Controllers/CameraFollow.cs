@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
@@ -8,15 +9,13 @@ public class CameraFollow : MonoBehaviour
 
     Vector3 m_Offset = Vector3.zero;
 
-    // Start is called before the first frame update
     void Start()
     {
         m_Offset = transform.position - m_ToFollow.position;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        transform.position = m_ToFollow.position + m_Offset;
+        if(Time.timeScale != 0) transform.position = m_ToFollow.position + m_Offset;
     }
 }

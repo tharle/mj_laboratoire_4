@@ -8,22 +8,23 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private const float DISTANCE_CHECK_COLLISION_GROUND = 1f;
+    private const float DISTANCE_CHECK_COLLISION_FEET = 0.3f;
 
     [SerializeField] float m_Speed = 2;
     [SerializeField] float m_JumpForce= 15;
     [SerializeField] Transform m_Foot;
     private Rigidbody m_RigidBody;
+    private HUDManager m_HUDManager;
 
-    // Start is called before the first frame update
     void Start()
     {
         m_RigidBody = GetComponent<Rigidbody>();
+        m_HUDManager = FindAnyObjectByType<HUDManager>();
     }
 
-    // Update is called once per frame
     void Update()
     {
+        Debug.DrawRay(m_Foot.position, Vector3.down * DISTANCE_CHECK_COLLISION_FEET, Color.red);
         Move();
         Jump();
     }
@@ -46,9 +47,30 @@ public class PlayerController : MonoBehaviour
 
     private bool IsGround()
     {
-        if(Physics.Raycast(m_Foot.position, Vector3.down, out RaycastHit hitInfo, DISTANCE_CHECK_COLLISION_GROUND))
+        if(Physics.Raycast(m_Foot.position, Vector3.down, out RaycastHit hitInfo, DISTANCE_CHECK_COLLISION_FEET))
         {
             return hitInfo.collider.CompareTag(GameParametres.TagName.GROUND);
+        }
+
+        return false;
+    }
+
+    public void TouchEnemy(EnemyController enemy) {
+        if (IsSmashingEnemy(enemy))
+        {
+            Destroy(enemy);
+        } else
+        {
+            m_HUDManager.ShowGameOver();
+            Destroy(gameObject);
+        }
+    }
+
+    private bool IsSmashingEnemy(EnemyController enemy) {
+        if (Physics.Raycast(m_Foot.position, Vector3.down, out RaycastHit hitInfo, DISTANCE_CHECK_COLLISION_FEET))
+        {
+            EnemyController enemyToucheByRayCast = hitInfo.collider.GetComponent<EnemyController>();
+            return enemyToucheByRayCast == enemy;
         }
 
         return false;
