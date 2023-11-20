@@ -5,29 +5,61 @@ using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
-    public void OnChangeScene1()
+    [SerializeField] string m_SceneActuel;
+    public void OnChangeToNextScene()
     {
-        SceneManager.LoadScene(GameParametres.SceneName.SCENE_1);
+        switch (m_SceneActuel)
+        {
+            case GameParametres.SceneName.SCENE_1:
+                OnChangeScene(GameParametres.SceneName.SCENE_2);
+                break;
+            case GameParametres.SceneName.SCENE_2:
+                OnChangeScene(GameParametres.SceneName.SCENE_3);
+                break;
+            case GameParametres.SceneName.SCENE_3:
+                OnChangeScene(GameParametres.SceneName.SCENE_4);
+                break;
+            case GameParametres.SceneName.SCENE_4:
+                OnChangeScene(GameParametres.SceneName.SCENE_5);
+                break;
+            case GameParametres.SceneName.SCENE_5:
+            default:
+                OnChangeScene(GameParametres.SceneName.SCENE_1);
+                break;
+        }
     }
 
-    public void OnChangeScene2()
+    public void OnChangeToPreviusScene()
     {
-        SceneManager.LoadScene(GameParametres.SceneName.SCENE_2);
+        switch (m_SceneActuel)
+        {
+            case GameParametres.SceneName.SCENE_1:
+                OnChangeScene(GameParametres.SceneName.SCENE_5);
+                break;
+            case GameParametres.SceneName.SCENE_2:
+                OnChangeScene(GameParametres.SceneName.SCENE_1);
+                break;
+            case GameParametres.SceneName.SCENE_3:
+                OnChangeScene(GameParametres.SceneName.SCENE_2);
+                break;
+            case GameParametres.SceneName.SCENE_4:
+                OnChangeScene(GameParametres.SceneName.SCENE_3);
+                break;
+            case GameParametres.SceneName.SCENE_5:
+            default:
+                OnChangeScene(GameParametres.SceneName.SCENE_4);
+                break;
+        }
     }
 
-    public void OnChangeScene3()
+    public void OnRefersh()
     {
-        SceneManager.LoadScene(GameParametres.SceneName.SCENE_3);
+        OnChangeScene(m_SceneActuel);
     }
 
-    public void OnChangeScene4()
+    private void OnChangeScene(string scene)
     {
-        SceneManager.LoadScene(GameParametres.SceneName.SCENE_4);
-    }
-
-    public void OnChangeScene5()
-    {
-        SceneManager.LoadScene(GameParametres.SceneName.SCENE_5);
+        SceneManager.LoadScene(scene);
     }
 
     public void OnQuit()
