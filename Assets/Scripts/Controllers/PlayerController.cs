@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
 {
     private const float DISTANCE_CHECK_COLLISION_FEET = 0.3f;
 
-    [SerializeField] float m_Speed = 2;
+    [SerializeField] float m_Speed = 5;
     [SerializeField] float m_JumpForce= 15;
     [SerializeField] Transform m_Foot;
     private Rigidbody m_RigidBody;
@@ -38,8 +38,12 @@ public class PlayerController : MonoBehaviour
     {
         float axisHorizontal = Input.GetAxis(GameParametres.InputName.AXIS_HORIZONTAL);
         float axisVertical = Input.GetAxis(GameParametres.InputName.AXIS_VERTICAL);
-        Vector3 direction = Vector3.right * axisHorizontal + Vector3.forward * axisVertical;
-        m_RigidBody.AddForce(direction * m_Speed, ForceMode.Force);
+
+        Vector3 velocity = m_RigidBody.velocity;
+        velocity.x = axisHorizontal * m_Speed;
+        velocity.z = axisVertical * m_Speed;
+
+        m_RigidBody.velocity = velocity;
     }
 
     private bool IsGround()
