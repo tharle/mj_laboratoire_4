@@ -16,12 +16,10 @@ public class GunController : MonoBehaviour
 
     private void Update()
     {
-        Debug.DrawRay(transform.position, m_Direction * m_Distance, Color.red);
-
-        CheckTouchAllObjets();
+        if (Input.GetMouseButtonDown((int)MouseButton.Left)) Shot();
     }
 
-    private void CheckTouchAllObjets()
+    private void Shot()
     {
         RaycastHit[] hits = Physics.RaycastAll(transform.position, transform.forward, m_Distance);
         if (hits.Length > 0)
