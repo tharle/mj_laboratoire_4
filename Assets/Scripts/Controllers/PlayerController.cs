@@ -24,7 +24,6 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Debug.DrawRay(m_Foot.position, Vector3.down * DISTANCE_CHECK_COLLISION_FEET, Color.red);
         Move();
         if(IsGround() && Input.GetKeyDown(GameParametres.InputName.KEY_JUMP)) Jump();
     }

@@ -1741,9 +1741,29 @@ PrefabInstance:
       propertyPath: m_Name
       value: Menu
       objectReference: {fileID: 0}
+    - target: {fileID: 1264721069154514366, guid: dd2bda370e6d22a40b62e48752d92c79, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1264721069154514366, guid: dd2bda370e6d22a40b62e48752d92c79, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4987771336126273350, guid: dd2bda370e6d22a40b62e48752d92c79, type: 3}
       propertyPath: m_text
       value: 'Scene 3: Les sections 11.6.4 et  11.6.9'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4987771336126273350, guid: dd2bda370e6d22a40b62e48752d92c79, type: 3}
+      propertyPath: m_margin.x
+      value: 1.5915527
+      objectReference: {fileID: 0}
+    - target: {fileID: 4987771336126273350, guid: dd2bda370e6d22a40b62e48752d92c79, type: 3}
+      propertyPath: m_margin.z
+      value: 5.4414062
+      objectReference: {fileID: 0}
+    - target: {fileID: 6340837279453501091, guid: dd2bda370e6d22a40b62e48752d92c79, type: 3}
+      propertyPath: m_SceneActuel
+      value: Scene3
       objectReference: {fileID: 0}
     - target: {fileID: 8561304327544192005, guid: dd2bda370e6d22a40b62e48752d92c79, type: 3}
       propertyPath: m_Pivot.x

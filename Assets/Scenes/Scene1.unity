@@ -437,6 +437,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Menu
       objectReference: {fileID: 0}
+    - target: {fileID: 1264721069154514366, guid: dd2bda370e6d22a40b62e48752d92c79, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1264721069154514366, guid: dd2bda370e6d22a40b62e48752d92c79, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4987771336126273350, guid: dd2bda370e6d22a40b62e48752d92c79, type: 3}
+      propertyPath: m_text
+      value: 'Scene 1: Les sections  11.6.1 et  11.6.2'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4987771336126273350, guid: dd2bda370e6d22a40b62e48752d92c79, type: 3}
+      propertyPath: m_margin.x
+      value: 6.25177
+      objectReference: {fileID: 0}
+    - target: {fileID: 4987771336126273350, guid: dd2bda370e6d22a40b62e48752d92c79, type: 3}
+      propertyPath: m_margin.z
+      value: 4.8548584
+      objectReference: {fileID: 0}
     - target: {fileID: 6340837279453501091, guid: dd2bda370e6d22a40b62e48752d92c79, type: 3}
       propertyPath: m_SceneActuel
       value: Scene1
@@ -1439,7 +1459,7 @@ GameObject:
   - component: {fileID: 2070390645}
   - component: {fileID: 2070390650}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: HUD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
