@@ -10,8 +10,6 @@ public class PlayerPointClickMovement : MonoBehaviour
     [SerializeField] float m_Range = 10f;
     [SerializeField] GameObject m_Fireball;
     [SerializeField] float m_ForceFireball = 10f;
-    float m_ElapseTimeFireball = 0;
-    float m_TimerFireball = 1;
 
     private NavMeshAgent m_Agent;
 
@@ -36,6 +34,8 @@ public class PlayerPointClickMovement : MonoBehaviour
 
     private void MoveBy()
     {
+        if (m_EnemyTarget != null) return;
+
         if (Input.GetMouseButtonDown((int) MouseButton.Left))
         {
             Ray rayFromCamera = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -43,10 +43,6 @@ public class PlayerPointClickMovement : MonoBehaviour
             if (Physics.Raycast(rayFromCamera, out RaycastHit hitInfo))
             {
                 m_Agent.SetDestination(hitInfo.point);
-            }
-            else
-            {
-                Debug.Log("We NO MOVE!");
             }
         }
     }
@@ -61,11 +57,8 @@ public class PlayerPointClickMovement : MonoBehaviour
 
         if (m_EnemyTarget != null)
         {
-            //TODO Add code pour faire de dammage au ennemy
             m_Agent.isStopped = true;
             m_Agent.ResetPath();
-
-            Debug.Log($"WE FIND A ENNEMY: {m_EnemyTarget.gameObject.name}!");
         }
 
         m_HUDEnemyInfo.UpdateInfo(m_EnemyTarget);
@@ -84,7 +77,6 @@ public class PlayerPointClickMovement : MonoBehaviour
             Debug.DrawRay(transform.position, direction * m_Range, Color.blue);
             enemy = GetEnemyInRange(direction);
 
-            if (enemy != null) Debug.Log($"We find an ennemy looking at {direction}");
             if (enemy != null) break;
 
         }
@@ -106,12 +98,18 @@ public class PlayerPointClickMovement : MonoBehaviour
     {
         if (m_EnemyTarget == null) return;
 
-        m_ElapseTimeFireball += Time.deltaTime;
-        if (m_ElapseTimeFireball < m_TimerFireball) return;
+        if (Input.GetMouseButtonDown((int)MouseButton.Left))
+        {
+            Vector3 directionToEnemy = GetDirectionToEnemy();
+            GameObject fireBall = Instantiate(m_Fireball, transform.position, Quaternion.identity);
+            fireBall.GetComponent<FireBallController>().SetDistanceMax(m_Range);
 
-        m_ElapseTimeFireball -= m_TimerFireball;
+            fireBall.GetComponent<Rigidbody>().AddForce(directionToEnemy * m_ForceFireball, ForceMode.Impulse);
+        }
+    }
 
-        GameObject fireBall = Instantiate(m_Fireball, transform.position, Quaternion.identity);
-        fireBall.GetComponent<Rigidbody>().AddForce(transform.forward * m_ForceFireball, ForceMode.Impulse);
+    private Vector3 GetDirectionToEnemy()
+    {
+        return (m_EnemyTarget.transform.position - transform.position).normalized;
     }
 }
