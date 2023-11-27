@@ -11,7 +11,7 @@ public class PlayerPointClickMovement : MonoBehaviour
     
     private NavMeshAgent m_Agent;
 
-    private int m_VisionAngle = 45; // en degrais
+    private float m_VisionAngle = Mathf.PI / 4; // en degrais
 
     private EnemyController m_EnemyTarget;
 
@@ -23,7 +23,8 @@ public class PlayerPointClickMovement : MonoBehaviour
     void Update()
     {
         MoveBy();
-        CheckEnemyInRange();
+        CheckVision();
+        
     }
 
     private void MoveBy()
@@ -43,35 +44,44 @@ public class PlayerPointClickMovement : MonoBehaviour
         }
     }
 
-    private void CheckEnemyInRange() 
+    private void CheckVision()
     {
-        for (int angle = -m_VisionAngle; angle <= m_VisionAngle; angle+=5)
+        if (m_EnemyTarget == null)
         {
-            Vector3 direction = transform.forward;
-            direction.x = direction.x * Mathf.Cos(angle);
-            direction.z = direction.z * Mathf.Sin(angle);
-
-            Debug.DrawRay(transform.position, direction * m_Range, Color.blue);
-            m_EnemyTarget = GetEnemyInRange(direction);
-
-            if (m_EnemyTarget != null) Debug.Log($"We find an ennemy looking at {direction}");
-            if (m_EnemyTarget != null) break;
-
+            m_Agent.isStopped = false;
+            m_EnemyTarget = CheckAndReturnEnemyInRange();
         }
 
         if (m_EnemyTarget != null)
         {
-
             //TODO Add code pour faire de dammage au ennemy
             m_Agent.isStopped = true;
             m_Agent.ResetPath();
 
             Debug.Log($"WE FIND A ENNEMY: {m_EnemyTarget.gameObject.name}!");
-        }else
-        {
-            // Resume
-            m_Agent.isStopped = false;
         }
+    }
+
+    private EnemyController CheckAndReturnEnemyInRange() 
+    {
+        EnemyController enemy = null;
+        Debug.DrawRay(transform.position, transform.forward * m_Range, Color.yellow);
+        for (float angle = -m_VisionAngle; angle <= m_VisionAngle; angle+= Mathf.PI / 36)
+        {
+            Vector3 direction = Vector3.zero;
+            direction.x = transform.forward.x * Mathf.Cos(angle) - transform.forward.z * Mathf.Sin(angle);
+            direction.z = transform.forward.x * Mathf.Sin(angle) + transform.forward.z * Mathf.Cos(angle);
+
+            Debug.DrawRay(transform.position, direction * m_Range, Color.blue);
+            enemy = GetEnemyInRange(direction);
+
+            if (enemy != null) Debug.Log($"We find an ennemy looking at {direction}");
+            if (enemy != null) break;
+
+        }
+
+        return enemy;
+
     }
 
     private EnemyController GetEnemyInRange(Vector3 direction)
