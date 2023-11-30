@@ -19,6 +19,9 @@ public class PlayerPointClickMovement : MonoBehaviour
     private EnemyController m_EnemyTarget;
     private HUDEnemyInfo m_HUDEnemyInfo;
 
+    private float m_ElapseFire = 0;
+    private float m_CooldownFire = 0.5f;
+
     void Start()
     {
         m_Agent = GetComponent<NavMeshAgent>();
@@ -67,17 +70,17 @@ public class PlayerPointClickMovement : MonoBehaviour
     private EnemyController CheckAndReturnEnemyInRange() 
     {
         EnemyController enemy = null;
-        Debug.DrawRay(transform.position, transform.forward * m_Range, Color.yellow);
         for (float angle = -m_VisionAngle; angle <= m_VisionAngle; angle+= m_VisionAngle / m_VisionAmountRayCast)
         {
             Vector3 direction = Vector3.zero;
             direction.x = transform.forward.x * Mathf.Cos(angle) - transform.forward.z * Mathf.Sin(angle);
             direction.z = transform.forward.x * Mathf.Sin(angle) + transform.forward.z * Mathf.Cos(angle);
 
-            Debug.DrawRay(transform.position, direction * m_Range, Color.blue);
             enemy = GetEnemyInRange(direction);
 
             if (enemy != null) break;
+
+            Vector3.Distance(transform.position, transform.forward);
 
         }
 
@@ -98,14 +101,15 @@ public class PlayerPointClickMovement : MonoBehaviour
     {
         if (m_EnemyTarget == null) return;
 
-        if (Input.GetMouseButtonDown((int)MouseButton.Left))
-        {
-            Vector3 directionToEnemy = GetDirectionToEnemy();
-            GameObject fireBall = Instantiate(m_Fireball, transform.position, Quaternion.identity);
-            fireBall.GetComponent<FireBallController>().SetDistanceMax(m_Range);
+        m_ElapseFire += Time.deltaTime;
+        if (m_ElapseFire < m_CooldownFire) return;
+        m_ElapseFire -= m_CooldownFire;
 
-            fireBall.GetComponent<Rigidbody>().AddForce(directionToEnemy * m_ForceFireball, ForceMode.Impulse);
-        }
+        Vector3 directionToEnemy = GetDirectionToEnemy();
+        GameObject fireBall = Instantiate(m_Fireball, transform.position, Quaternion.identity);
+        fireBall.GetComponent<FireBallController>().SetDistanceMax(m_Range);
+
+        fireBall.GetComponent<Rigidbody>().AddForce(directionToEnemy * m_ForceFireball, ForceMode.Impulse);
     }
 
     private Vector3 GetDirectionToEnemy()

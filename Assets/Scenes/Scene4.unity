@@ -1531,7 +1531,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1197409721
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1840,6 +1840,7 @@ MonoBehaviour:
   m_Range: 15
   m_Fireball: {fileID: 8370900899957834027, guid: dafd95af450074d47aa738908c69c465, type: 3}
   m_ForceFireball: 10
+  m_Speed: {x: 10, y: 50}
 --- !u!1001 &1409245506
 PrefabInstance:
   m_ObjectHideFlags: 0
