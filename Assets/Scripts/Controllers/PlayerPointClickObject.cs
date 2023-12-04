@@ -12,7 +12,6 @@ public class PlayerPointClickObject : MonoBehaviour
     private ObjectController m_ObjetTarget;
     private HUDScoreInfo m_HUDScoreInfo;
 
-    bool m_isCollidedObject = false;
     private int m_Money = 0;
 
     void Start()
@@ -48,8 +47,6 @@ public class PlayerPointClickObject : MonoBehaviour
 
         if (objetTarget == null || objetTarget.IsOpened()) return;
 
-        Debug.Log("WE CLICK OBJECT");
-
         m_ObjetTarget = objetTarget;
     }
 
@@ -59,8 +56,6 @@ public class PlayerPointClickObject : MonoBehaviour
 
         if(GetDistanceFromObjetSelected() <= m_ObjetTarget.GetDistanceInteraction())
         {
-
-            Debug.Log("WE ARE NEXT TO OBJECT");
             m_Rigidbody.velocity = Vector3.zero;
             m_Money += m_ObjetTarget.Open();
             m_HUDScoreInfo.OnMoneyChange(m_Money);

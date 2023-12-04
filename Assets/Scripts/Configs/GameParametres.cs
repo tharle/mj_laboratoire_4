@@ -1,6 +1,11 @@
 ﻿public class GameParametres
 {
 
+    public class AnimationName
+    {
+        public const string OVEN_OPEN = "chest_open";
+    }
+
     public class InputName
     {
         public const string AXIS_HORIZONTAL = "Horizontal";

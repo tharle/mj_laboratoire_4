@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class ObjectController : MonoBehaviour
 {
-    [SerializeField] private float m_DistanceInteraction = 1f;
+    [SerializeField] private float m_DistanceInteraction = 2f;
     [SerializeField] Vector2 m_RangeCoinValue = new Vector2(15, 50);
+    [SerializeField] Animator m_Animator;
     private int m_CoinValue;
     private bool m_IsOpened = false;
     // Start is called before the first frame update
@@ -41,10 +42,7 @@ public class ObjectController : MonoBehaviour
 
         m_IsOpened = true;
 
-        Debug.Log("DO ACTION: "+name);
-        Debug.Log("Add: " + m_CoinValue);
-
-        // TODO do animation
+        m_Animator.SetTrigger(GameParametres.AnimationName.OVEN_OPEN);
 
         return m_CoinValue;
     }
